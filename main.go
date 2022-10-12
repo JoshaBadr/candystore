@@ -26,7 +26,7 @@ var customerDtos = []customerDto{}
 var customersData = []customer{}
 
 // Creates a collector to scrape candystore.zimpler.net customers
-// and then print out the favorite snack and total amount of each unique customer.
+// and then prints out the favorite snack and total amount of each unique customer.
 func main() {
 	collector := colly.NewCollector()
 
