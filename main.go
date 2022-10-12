@@ -28,6 +28,7 @@ var customersData = []customer{}
 // Creates a collector to scrape candystore.zimpler.net customers
 // and then prints out the favorite snack and total amount of each unique customer.
 func main() {
+	// Initiates the collector and configures it.
 	collector := colly.NewCollector()
 
 	collector.OnHTML("#top\\.customers tbody tr", accumulateCustomers)
