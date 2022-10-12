@@ -25,6 +25,8 @@ var customersMap = make(map[string]*customer)
 var customerDtos = []customerDto{}
 var customersData = []customer{}
 
+// Creates a collector to scrape candystore.zimpler.net customers
+// and then prints out the favorite snack and total amount of each uniques customer.
 func main() {
 	collector := colly.NewCollector()
 
@@ -40,6 +42,8 @@ func main() {
 
 	collector.Visit("https://candystore.zimpler.net")
 
+	// Looks for the highest total amount of every snack for each customer,
+	// then creates a customer DTO to be printed out in indented JSON format.
 	for _, c := range customersData {
 		favoriteAmount := 0
 		var favoriteSnack string
@@ -68,6 +72,12 @@ func main() {
 	fmt.Println(result.String())
 }
 
+// Accumulates the customers inside customer table with id=top.customers.
+// If a customer doesn't exist in the map it adds that customer to the customer data slice
+// and passes the adress of that customer to the map key as the value.
+// Once the customer is added any new snack will be added with the amount.
+// If all of the above exists as data then it will accumulate the amount to each
+// corresponding snack.
 func accumulateCustomers(row *colly.HTMLElement) {
 	name := row.ChildText("td:nth-child(1)")
 	snack := row.ChildText("td:nth-child(2)")
