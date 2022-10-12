@@ -43,9 +43,29 @@ func main() {
 
 	collector.Visit("https://candystore.zimpler.net")
 
-	// Looks for the highest total amount of snacks eaten, for each customer,
-	// then appends a customer DTO to the customer DTO slice to be printed
-	// out in indented JSON format.
+	convertCustomerDataToDtos()
+
+	jsonDtos := marshalIndentDtos()
+	fmt.Println(jsonDtos)
+}
+
+// Converts the DTO slice to JSON format and returns string
+func marshalIndentDtos() string {
+	b, err := json.Marshal(customerDtos)
+	if err != nil {
+		log.Fatalf("Marshal error: %v", err)
+	}
+
+	var result bytes.Buffer
+	json.Indent(&result, b, "", "   ")
+
+	return result.String()
+}
+
+// Looks for the highest total amount of snacks eaten, for each customer,
+// then appends a customer DTO to the customer DTO slice to be printed
+// out in indented JSON format.
+func convertCustomerDataToDtos() {
 	for _, c := range customersData {
 		favoriteAmount := 0
 		var favoriteSnack string
@@ -63,15 +83,6 @@ func main() {
 
 		customerDtos = append(customerDtos, customerDto)
 	}
-
-	b, err := json.Marshal(customerDtos)
-	if err != nil {
-		log.Fatalf("Marshal error: %v", err)
-	}
-
-	var result bytes.Buffer
-	json.Indent(&result, b, "", "   ")
-	fmt.Println(result.String())
 }
 
 // Accumulates the customers inside customer table with id=top.customers.
