@@ -42,7 +42,7 @@ func main() {
 
 	collector.Visit("https://candystore.zimpler.net")
 
-	// Looks for the highest total amount of every snack for each customer,
+	// Looks for the highest total amount of snacks eaten, for every snack, for each customer,
 	// then creates a customer DTO to be printed out in indented JSON format.
 	for _, c := range customersData {
 		favoriteAmount := 0
